@@ -47,7 +47,8 @@
               kubectl
               cloudflared
               glibcLocales
-              ungoogled-chromium
+              # FIXME: doesn't build for Darwin
+              # ungoogled-chromium
               chromedriver
               cspell
             ]
