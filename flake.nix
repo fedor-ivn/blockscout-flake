@@ -18,7 +18,7 @@
       system:
       let
         inherit (pkgs.lib) optional optionals;
-        pkgs = import nixpkgs { 
+        pkgs = import nixpkgs {
           inherit system;
           overlays = [ foundry.overlay ];
         };
@@ -42,15 +42,18 @@
               elixir
               elixir_ls
               nodejs
-              postgresql
+
               foundry-bin
-              kubectl
-              cloudflared
-              glibcLocales
+              postgresql
               # FIXME: doesn't build for Darwin
               # ungoogled-chromium
               chromedriver
+              glibcLocales
               cspell
+
+              kubectl
+              rancher
+              cloudflared
             ]
             ++ optional stdenv.isLinux inotify-tools
             ++ optional stdenv.isDarwin terminal-notifier
