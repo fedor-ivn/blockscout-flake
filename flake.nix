@@ -21,6 +21,7 @@
         pkgs = import nixpkgs {
           inherit system;
           overlays = [ foundry.overlay ];
+          config.allowUnfree = true;
         };
 
         erlang = pkgs.erlang_27.override {
@@ -45,9 +46,8 @@
 
               foundry-bin
               postgresql
-              # FIXME: doesn't build for Darwin
-              # ungoogled-chromium
-              chromedriver
+
+              electron-chromedriver_31
               glibcLocales
               cspell
 
@@ -56,6 +56,8 @@
               cloudflared
             ]
             ++ optional stdenv.isLinux inotify-tools
+            # FIXME: doesn't build for Darwin, so you should have it installed manually
+            ++ optional stdenv.isLinux ungoogled-chromium
             ++ optional stdenv.isDarwin terminal-notifier
             ++ optionals stdenv.isDarwin (
               with darwin.apple_sdk.frameworks;
