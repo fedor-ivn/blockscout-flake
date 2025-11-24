@@ -25,15 +25,16 @@
         };
 
         cspell = pkgs.nodePackages_latest.cspell;
-        elixir-with-otp27 = pkgs.elixir-with-otp pkgs.erlang_27;
-        elixir = elixir-with-otp27."1.19.3";
+        # elixir-with-otp27 = pkgs.elixir-with-otp pkgs.erlang_27;
+        # elixir = elixir-with-otp27."1.19.3";
+        # elixir = elixir-bin."1.19.3";
       in
       with pkgs;
       {
         devShell = pkgs.mkShell {
           buildInputs =
             [
-              elixir
+              elixir-bin."1.19.3"
               elixir-ls
               nodejs
 
