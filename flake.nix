@@ -4,9 +4,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
-    # TODO: uncomment when https://github.com/zoedsoupe/elixir-overlay/pull/2 is merged
-    # elixir-overlay.url = "github:zoedsoupe/elixir-overlay";
-    elixir-overlay.url = "github:zoedsoupe/elixir-overlay/update-elixir-manifests";
+    elixir-overlay.url = "github:zoedsoupe/elixir-overlay";
   };
 
   outputs =
@@ -27,7 +25,8 @@
         };
 
         cspell = pkgs.nodePackages_latest.cspell;
-        elixir = pkgs.elixir-bin."1.19.3";
+        elixir-with-otp27 = pkgs.elixir-with-otp pkgs.erlang_27;
+        elixir = elixir-with-otp27."1.19.3";
       in
       with pkgs;
       {

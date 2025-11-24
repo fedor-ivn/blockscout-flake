@@ -6,16 +6,15 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1763272957,
+        "lastModified": 1763983634,
         "narHash": "sha256-aPfuHiQ920ej2BBoN3kleBeHhzOxC26iIZgy0PkgrtI=",
         "owner": "zoedsoupe",
         "repo": "elixir-overlay",
-        "rev": "b9e0dbd792dbe29b5ef6d9ee38aca8dab7023ca0",
+        "rev": "010fa39e8cbbfeb0751c83f5f0095176b75119df",
         "type": "github"
       },
       "original": {
         "owner": "zoedsoupe",
-        "ref": "update-elixir-manifests",
         "repo": "elixir-overlay",
         "type": "github"
       }
