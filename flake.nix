@@ -4,7 +4,6 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
-    foundry.url = "github:shazow/foundry.nix/monthly";
     elixir-overlay.url = "github:zoedsoupe/elixir-overlay/update-elixir-manifests";
   };
 
@@ -13,7 +12,6 @@
       self,
       nixpkgs,
       flake-utils,
-      foundry,
       elixir-overlay
     }:
     flake-utils.lib.eachDefaultSystem (
@@ -22,10 +20,7 @@
         inherit (pkgs.lib) optional optionals;
         pkgs = import nixpkgs {
           inherit system;
-          overlays = [ 
-            foundry.overlay 
-            elixir-overlay.overlays.default
-          ];
+          overlays = [ elixir-overlay.overlays.default ];
           config.allowUnfree = true;
         };
 
@@ -41,7 +36,7 @@
               elixir-ls
               nodejs
 
-              foundry-bin
+              foundry
               postgresql
 
               electron-chromedriver
