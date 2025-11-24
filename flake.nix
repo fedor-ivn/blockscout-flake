@@ -5,6 +5,7 @@
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
     foundry.url = "github:shazow/foundry.nix/monthly";
+    elixir-overlay.url = "github:zoedsoupe/elixir-overlay/update-elixir-manifests";
   };
 
   outputs =
@@ -13,6 +14,7 @@
       nixpkgs,
       flake-utils,
       foundry,
+      elixir-overlay
     }:
     flake-utils.lib.eachDefaultSystem (
       system:
@@ -20,20 +22,15 @@
         inherit (pkgs.lib) optional optionals;
         pkgs = import nixpkgs {
           inherit system;
-          overlays = [ foundry.overlay ];
+          overlays = [ 
+            foundry.overlay 
+            elixir-overlay.overlays.default
+          ];
           config.allowUnfree = true;
         };
 
-        erlang = pkgs.erlang_27.override {
-          version = "27.0";
-          sha256 = "sha256-YZWBLcpkm8B4sjoQO7I9ywXcmxXL+Dvq/JYsLsr7TO0=";
-        };
-        beamPkg = pkgs.beam.packagesWith erlang;
-        elixir = beamPkg.elixir_1_17;
-
-        nodejs = pkgs.nodejs-18_x;
-
         cspell = pkgs.nodePackages_latest.cspell;
+        elixir = pkgs.elixir-bin."1.19.3";
       in
       with pkgs;
       {
@@ -41,13 +38,13 @@
           buildInputs =
             [
               elixir
-              elixir_ls
+              elixir-ls
               nodejs
 
               foundry-bin
               postgresql
 
-              electron-chromedriver_31
+              electron-chromedriver
               glibcLocales
               cspell
 
@@ -58,14 +55,7 @@
             ++ optional stdenv.isLinux inotify-tools
             # FIXME: doesn't build for Darwin, so you should have it installed manually
             ++ optional stdenv.isLinux ungoogled-chromium
-            ++ optional stdenv.isDarwin terminal-notifier
-            ++ optionals stdenv.isDarwin (
-              with darwin.apple_sdk.frameworks;
-              [
-                CoreFoundation
-                CoreServices
-              ]
-            );
+            ++ optional stdenv.isDarwin terminal-notifier;
         };
       }
     );
